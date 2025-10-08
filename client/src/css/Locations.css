@@ -57,3 +57,27 @@ svg polygon:hover {
     text-transform: uppercase;
     font-weight: 700;
 }
+
+/* Style for the floating name tag */
+.location-hover-name {
+    position: absolute;
+    top: 20px; /* Position it at the top */
+    left: 50%; /* Center it horizontally */
+    transform: translateX(-50%); /* Fine-tune the centering */
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #61dafb;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    z-index: 20; /* Ensure it's on top of everything */
+    pointer-events: none; /* This is important! It stops the name tag from blocking mouse events on the SVG */
+    border: 2px solid #61dafb;
+    /* Add a subtle animation for appearing/disappearing */
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}

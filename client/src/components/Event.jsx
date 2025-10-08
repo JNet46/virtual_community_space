@@ -1,62 +1,53 @@
-import React, { useState, useEffect } from 'react'
-import '../css/Event.css'
+// src/components/Event.jsx
 
-const Event = (props) => {
+import React from 'react';
+import '../css/Event.css'; // Make sure you have this CSS file
 
-    const [event, setEvent] = useState([])
-    const [time, setTime] = useState([])
-    const [remaining, setRemaining] = useState([])
+// 1. Import the necessary helper functions and the new Countdown component.
+import { formatDate, formatTime } from '../services/Dates.jsx';
+import Countdown from './Countdown.jsx'; // The .jsx is optional but good for clarity
 
-    useEffect(() => {
-        (async () => {
-            try {
-                const eventData = await EventsAPI.getEventsById(props.id)
-                setEvent(eventData)
-            }
-            catch (error) {
-                throw error
-            }
-        }) ()
-    }, [])
+/**
+ * A presentational component that displays the details of a single event.
+ * @param {object} props - The props object.
+ * @param {object} props.event - The full event object from the database.
+ */
+const Event = ({ event }) => {
+    
+    // 2. This is a "guard clause". If for some reason no event data is passed,
+    //    the component will render nothing instead of crashing.
+    if (!event) {
+        return null;
+    }
 
-    useEffect(() => {
-        (async () => {
-            try {
-                const result = await dates.formatTime(event.time)
-                setTime(result)
-            }
-            catch (error) {
-                throw error
-            }
-        }) ()
-    }, [event])
-
-    useEffect(() => {
-        (async () => {
-            try {
-                const timeRemaining = await dates.formatRemainingTime(event.remaining)
-                setRemaining(timeRemaining)
-                dates.formatNegativeTimeRemaining(remaining, event.id)
-            }
-            catch (error) {
-                throw error
-            }
-        }) ()
-    }, [event])
+    // 3. We call the formatting functions directly with the data from the prop.
+    //    There's no need for state or useEffect in this component.
+    const displayDate = formatDate(event.date);
+    const displayTime = formatTime(event.date);
 
     return (
         <article className='event-information'>
-            <img src={event.image} />
+            {/* Use a placeholder image if the event data doesn't include one */}
+            <img src={event.image || 'https://via.placeholder.com/400x300'} alt={event.name} />
 
             <div className='event-information-overlay'>
                 <div className='text'>
-                    <h3>{event.title}</h3>
-                    <p><i className="fa-regular fa-calendar fa-bounce"></i> {event.date} <br /> {time}</p>
-                    <p id={`remaining-${event.id}`}>{remaining}</p>
+                    {/* Use properties directly from the 'event' prop */}
+                    <h3>{event.name}</h3>
+                    <p className="event-date-time">
+                        <i className="fa-regular fa-calendar"></i> {displayDate} <br /> 
+                        <i className="fa-regular fa-clock"></i> {displayTime}
+                    </p>
+                    
+                    {/* 4. Here we render the live, ticking Countdown component,
+                        passing it the event's date as the targetDate prop. */}
+                    <p className="time-remaining">
+                        <Countdown targetDate={event.date} />
+                    </p>
                 </div>
             </div>
         </article>
-    )
-}
+    );
+};
 
-export default Event
+export default Event;

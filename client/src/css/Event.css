@@ -14,6 +14,13 @@
     object-fit: cover;
 }
 
+.all-events-header{
+    background-color: var(--main-color);
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    column-gap: 10px;
+}
+
 .event-information-overlay {
     position: absolute;
     bottom: 0;

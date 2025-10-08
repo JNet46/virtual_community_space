@@ -12,6 +12,21 @@
     column-gap: 10px;
 }
 
+.events-grid {
+    /* 1. Turn the container into a grid */
+    display: grid;
+
+    /* 2. Define the columns. This creates a responsive grid. */
+    /* It will be 2 columns on wider screens and automatically wrap to 1 on smaller screens. */
+    grid-template-columns: 1fr 2fr;
+
+    /* --- OR, for a STRICT 2-column layout, use this line instead --- */
+    /* grid-template-columns: 1fr 1fr; */
+
+    /* 3. Define the gap between the grid items (both rows and columns) */
+    gap: 8rem;
+}
+
 .location-image img {
     width: 300px;
     height: auto;

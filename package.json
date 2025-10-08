@@ -2,8 +2,11 @@
   "name": "unitygridplaza",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"cd client && vite\" \"cd server && nodemon server\"",
+    "dev": "npm run seed && concurrently \"npm run server\" \"npm run client\"",
     "start": "cd server && node server",
+    "seed": "node server/seed.js",
+    "client": "vite client",
+    "server": "nodemon server/server.js",
     "build": "cd client && vite build"
   },
   "dependencies": {
@@ -16,7 +19,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.9.0",
-    "serve-favicon": "^2.5.0"
+    "serve-favicon": "^2.5.0",
+    "slugify": "^1.6.6"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",
